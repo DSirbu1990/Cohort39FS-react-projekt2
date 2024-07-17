@@ -1,23 +1,38 @@
-import { StyledButton, ButtonImg } from "./styles";
+import styled from "@emotion/styled";
 
-import { ButtonProps } from "./types";
+import { colors } from "styles/colors";
 
-function Button({
-  imgSrc = undefined,
-  type = "button",
-  name = "Send",
-  onClick,
-  disabled = false,
-  isRed = false
-}: ButtonProps) {
-  return (
-    <StyledButton $isRed={isRed} disabled={disabled} onClick={onClick} type={type}>
-      {/* Если imgSrc === true, то правая часть после && показывается на странице
-      Если imgSrc === false, то правая часть после && скрывается */}
-      {imgSrc && <ButtonImg src={imgSrc} />}
-      {!imgSrc && name}
-    </StyledButton>
-  );
+interface StyledButtonProps {
+  $isRed?: boolean;
 }
 
-export default Button;
+const getButtonColor = (
+  disbled: boolean | undefined,
+  isRed: boolean | undefined
+) => {
+  if (disbled) {
+    return "grey";
+  } else if (isRed) {
+    return colors.ERROR;
+  } else {
+    return colors.PRIMARY_BLUE;
+  }
+};
+
+export const StyledButton = styled("button")<StyledButtonProps>`
+  height: 70px;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  background-color: ${({ disabled, $isRed }) =>
+    getButtonColor(disabled, $isRed)};
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+`;
+
+export const ButtonImg = styled("img")`
+  width: 20px;
+  height: 20px;
+`;

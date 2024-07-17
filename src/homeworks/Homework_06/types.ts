@@ -1,6 +1,5 @@
 export interface Car {
-    brand: string;
-    price: number;
-    isDiesel: boolean;
-  }
-  
+  brand: string;
+  price: number;
+  isDiesel: boolean;
+}
